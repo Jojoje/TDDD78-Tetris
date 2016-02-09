@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class Board {
     private SquareType[][] squares;
     private int width, height;
@@ -7,6 +9,21 @@ public class Board {
 	this.height = height;
 
 	squares = new SquareType[width][height];
+
+	for(int y = 0; y < getHeight(); y++){
+	    for(int x = 0; x < getWidth(); x++) {
+		squares[x][y] = SquareType.EMPTY;
+	    }
+	}
+    }
+
+    public void randomiseBoard(){
+	Random random = new Random();
+	for(int y = 0; y < getHeight(); y++){
+	    for(int x = 0; x < getWidth(); x++) {
+		squares[x][y] = SquareType.values()[random.nextInt(8)];
+	    }
+	}
     }
 
     public int getHeight() {
@@ -17,8 +34,8 @@ public class Board {
 	return width;
     }
 
-    public SquareType[][] getSquares() {
-	return squares;
+    public SquareType getSquare(int x, int y){
+	return squares[x][y];
     }
 
 }

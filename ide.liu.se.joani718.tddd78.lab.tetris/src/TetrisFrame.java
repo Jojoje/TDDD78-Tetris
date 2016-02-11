@@ -19,4 +19,11 @@ public class TetrisFrame extends JFrame {
 	this.setVisible(true);
 
     }
+
+    public void updateFrame(){
+	textArea.setText(BoardToTextConverter.convertToText(board));
+	this.repaint();
+    }
+
+
 }

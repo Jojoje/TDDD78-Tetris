@@ -4,22 +4,26 @@ import java.awt.event.ActionEvent;
 
 public class BoardTest {
 
+    static Board board;
+    static TetrisFrame frame;
+
     public static void main(String[] args){
 
-	Board board = new Board(10,13);
+	board = new Board(10,13);
 	board.randomiseBoard();
-	TetrisFrame frame = new TetrisFrame(board);
+	frame = new TetrisFrame(board);
 
 	final Action doOneStep = new AbstractAction() {
 	    public void actionPerformed(ActionEvent e) {
+		board.randomiseBoard();
 
+		frame.updateFrame();
 	    }
 	};
 
    	final Timer clockTimer = new Timer(1000, doOneStep);
    	clockTimer.setCoalesce(true);
    	clockTimer.start();
-	//...
-	clockTimer.stop();
+	//clockTimer.stop();
     }
 }

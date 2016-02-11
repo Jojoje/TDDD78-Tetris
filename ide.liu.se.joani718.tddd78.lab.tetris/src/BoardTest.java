@@ -1,15 +1,16 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class BoardTest {
 
-    static Board board;
-    static TetrisFrame frame;
+    private static Board board;
+    private static TetrisFrame frame;
+    private static final int ROW = 13;
+    private static final int COLUMMN = 10;
 
     public static void main(String[] args){
 
-	board = new Board(10,13);
+	board = new Board(COLUMMN,ROW);
 	board.randomiseBoard();
 	frame = new TetrisFrame(board);
 

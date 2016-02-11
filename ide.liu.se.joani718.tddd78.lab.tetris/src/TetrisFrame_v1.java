@@ -1,14 +1,15 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class TetrisFrame extends JFrame{
+public class TetrisFrame_v1 extends JFrame{
     private Board board;
     private JTextArea textArea;
 
     private final int FONT_SIZE = 20;
 
-    public TetrisFrame(Board board) {
+    public TetrisFrame_v1(Board board) {
 	super("Jojoje's Tetris");
 	this.board = board;
 

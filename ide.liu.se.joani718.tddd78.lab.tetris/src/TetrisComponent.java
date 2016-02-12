@@ -30,12 +30,17 @@ public class TetrisComponent extends JComponent {
 	super.paintComponent(g);
 	final Graphics2D g2d = (Graphics2D) g;
 	g2d.setBackground(Color.BLACK);
-
+	int upperX, upperY, downX, downY;
 	for(int y = 0; y < board.getHeight(); y++){
 	    for(int x = 0; x < board.getWidth(); x++) {
 		g2d.setColor(enumMap.get(board.getSquare(x,y)));
-		g2d.fillRect(x*BLOCK_WITDH + SPACE_BETWEEN_BLOCKS,y*BLOCK_HEIGHT + SPACE_BETWEEN_BLOCKS,
-			     (x+1)*BLOCK_WITDH - SPACE_BETWEEN_BLOCKS,(y+1)*BLOCK_HEIGHT - SPACE_BETWEEN_BLOCKS);
+		upperX = x*BLOCK_WITDH + SPACE_BETWEEN_BLOCKS;
+		upperY = y*BLOCK_HEIGHT + SPACE_BETWEEN_BLOCKS;
+		downX = (x+1)*BLOCK_HEIGHT - SPACE_BETWEEN_BLOCKS;
+		downY = (y+1)*BLOCK_HEIGHT - SPACE_BETWEEN_BLOCKS;
+		
+		g2d.fillRect(upperX, upperY,
+			     downX,downY);
 	    }
 	}
     }

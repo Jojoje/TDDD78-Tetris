@@ -6,8 +6,7 @@ import java.util.Map;
 
 public class TetrisComponent extends JComponent {
     final Board board;
-    final int BLOCK_WITDH = 30;
-    final int BLOCK_HEIGHT = 30;
+    final int BLOCK_SIZE = 40;
     final int SPACE_BETWEEN_BLOCKS = 10;
 
     private static final Map<SquareType, java.awt.Color> enumMap =
@@ -34,11 +33,13 @@ public class TetrisComponent extends JComponent {
 	for(int y = 0; y < board.getHeight(); y++){
 	    for(int x = 0; x < board.getWidth(); x++) {
 		g2d.setColor(enumMap.get(board.getSquare(x,y)));
-		upperX = x*BLOCK_WITDH + SPACE_BETWEEN_BLOCKS;
-		upperY = y*BLOCK_HEIGHT + SPACE_BETWEEN_BLOCKS;
-		downX = (x+1)*BLOCK_HEIGHT - SPACE_BETWEEN_BLOCKS;
-		downY = (y+1)*BLOCK_HEIGHT - SPACE_BETWEEN_BLOCKS;
-		
+
+		upperX = x*BLOCK_SIZE + SPACE_BETWEEN_BLOCKS;
+		upperY = y*BLOCK_SIZE + SPACE_BETWEEN_BLOCKS;
+
+		downX = (x+1)*BLOCK_SIZE - SPACE_BETWEEN_BLOCKS;
+		downY = (y+1)*BLOCK_SIZE - SPACE_BETWEEN_BLOCKS;
+
 		g2d.fillRect(upperX, upperY,
 			     downX,downY);
 	    }
@@ -46,8 +47,8 @@ public class TetrisComponent extends JComponent {
     }
 
     @Override public Dimension getPreferredSize(){
-	return new Dimension(board.getWidth()*(BLOCK_WITDH) + SPACE_BETWEEN_BLOCKS,
-			     board.getHeight()*(BLOCK_HEIGHT) + SPACE_BETWEEN_BLOCKS);
+	return new Dimension(board.getWidth()*BLOCK_SIZE + SPACE_BETWEEN_BLOCKS,
+			     board.getHeight()*BLOCK_SIZE + SPACE_BETWEEN_BLOCKS);
     }
 
 }

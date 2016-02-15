@@ -32,7 +32,7 @@ public class TetrominoMaker {
 
     }
 
-    public Poly createIBlock(){
+    private Poly createIBlock(){
 	SquareType[][] block = new SquareType[4][4];
 	fillWithEmpty(block);
 	for(int i = 0; i < 4; i++ ){
@@ -42,7 +42,7 @@ public class TetrominoMaker {
 	return poly;
     }
 
-    public Poly createSBlock(){
+    private Poly createSBlock(){
 	SquareType[][] block = new SquareType[3][3];
 	fillWithEmpty(block);
 
@@ -55,7 +55,7 @@ public class TetrominoMaker {
 	return poly;
     }
 
-    public Poly createTBlock(){
+    private Poly createTBlock(){
     	SquareType[][] block = new SquareType[3][3];
     	fillWithEmpty(block);
 
@@ -68,7 +68,7 @@ public class TetrominoMaker {
     	return poly;
     }
 
-    public Poly createZBlock(){
+    private Poly createZBlock(){
     	SquareType[][] block = new SquareType[3][3];
     	fillWithEmpty(block);
 
@@ -81,7 +81,7 @@ public class TetrominoMaker {
     	return poly;
     }
 
-    public Poly createJBlock(){
+    private Poly createJBlock(){
     	SquareType[][] block = new SquareType[3][3];
     	fillWithEmpty(block);
 
@@ -94,7 +94,7 @@ public class TetrominoMaker {
     	return poly;
     }
 
-    public Poly createLBlock(){
+    private Poly createLBlock(){
     	SquareType[][] block = new SquareType[3][3];
     	fillWithEmpty(block);
 
@@ -107,7 +107,7 @@ public class TetrominoMaker {
     	return poly;
     }
 
-    public Poly createOBlock(){
+    private Poly createOBlock(){
     	SquareType[][] block = new SquareType[2][2];
 
     	block[0][0] = SquareType.O;

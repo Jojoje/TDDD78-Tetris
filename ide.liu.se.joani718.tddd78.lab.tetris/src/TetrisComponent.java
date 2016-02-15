@@ -28,11 +28,16 @@ public class TetrisComponent extends JComponent implements BoardListener {
     @Override protected void paintComponent(Graphics g){
 	super.paintComponent(g);
 	final Graphics2D g2d = (Graphics2D) g;
-	g2d.setBackground(Color.BLACK);
+
 	int cornerX, cornerY;
 	for(int y = 0; y < board.getHeight(); y++){
 	    for(int x = 0; x < board.getWidth(); x++) {
-		g2d.setColor(enumMap.get(board.getSquare(x,y)));
+		if(zoneOfFalling(x,y)){
+		    g2d.setColor(enumMap.get(board.getFalling().getBlock()[x - board.getFallingX()][y - board.getFallingY()]));
+		}else{
+		    //System.out.println("Not in da zone...");
+		    g2d.setColor(enumMap.get(board.getSquare(x,y)));
+		}
 
 		cornerX = x*BLOCK_SIZE + SPACE_BETWEEN_BLOCKS;
 		cornerY = y*BLOCK_SIZE + SPACE_BETWEEN_BLOCKS;
@@ -41,11 +46,19 @@ public class TetrisComponent extends JComponent implements BoardListener {
 			     BLOCK_SIZE - SPACE_BETWEEN_BLOCKS,
 			     BLOCK_SIZE - SPACE_BETWEEN_BLOCKS);
 
+
 		g2d.setColor(Color.BLACK);
 		g2d.drawLine(x*BLOCK_SIZE,y*BLOCK_SIZE, x*BLOCK_SIZE, (y+1)*BLOCK_SIZE);
 		g2d.drawLine(x*BLOCK_SIZE,y*BLOCK_SIZE, (x+1)*BLOCK_SIZE, y*BLOCK_SIZE);
 	    }
 	}
+    }
+
+    public boolean zoneOfFalling(int x, int y){
+	return ((board.getFalling() != null) &&
+		((board.getFallingX() <= x && (board.getFallingX() + board.getFalling().getBlock().length) > x) &&
+		(board.getFallingY() <= y && board.getFallingY() + board.getFalling().getBlock()[0].length > y) &&
+		!(board.getFalling().getBlock()[1][1] == SquareType.EMPTY)));
     }
 
     @Override public Dimension getPreferredSize(){

@@ -3,6 +3,7 @@ public class Poly {
 
     public Poly(SquareType[][] block) {
 	this.block = block;
+
     }
 
     public SquareType[][] getBlock() {

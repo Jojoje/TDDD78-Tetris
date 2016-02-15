@@ -11,14 +11,12 @@ public class BoardTest {
     public static void main(String[] args){
 
 	board = new Board(COLUMMN,ROW);
-	board.randomiseBoard();
 	frame = new TetrisFrame(board);
 
 	final Action doOneStep = new AbstractAction() {
 	    public void actionPerformed(ActionEvent e) {
-		board.randomiseBoard();
 
-		frame.updateFrame();
+
 	    }
 	};
 

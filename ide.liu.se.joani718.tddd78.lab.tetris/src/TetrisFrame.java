@@ -15,6 +15,7 @@ public class TetrisFrame extends JFrame{
 	createMenus();
 
 	tetrisComponent = new TetrisComponent(board);
+	board.addBoardListener(tetrisComponent);
 	this.add(tetrisComponent);
 
 	this.pack();

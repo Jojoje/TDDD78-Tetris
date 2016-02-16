@@ -4,8 +4,10 @@ import java.util.Random;
 
 public class Board {
 
+    private final int PADDING = 2;
+
     private SquareType[][] squares;
-    public int width, height;
+    private int width, height;
     private Random random;
 
     private Poly falling = null;
@@ -14,6 +16,7 @@ public class Board {
     private TetrominoMaker tetrominoMaker;
     private List<BoardListener> boardListeners;
 
+    private boolean gameOver = false;
 
     public Board(final int width, final int height) {
 	this.width = width;
@@ -23,7 +26,7 @@ public class Board {
 	tetrominoMaker = new TetrominoMaker();
 	boardListeners = new ArrayList<BoardListener>();
 
-	squares = new SquareType[this.width + 4][this.height + 4];
+	squares = new SquareType[this.width + PADDING*2][this.height + PADDING*2];
 
 	primeBoard();
     }
@@ -35,8 +38,8 @@ public class Board {
 	    }
 	}
 
-	for(int y = 0; y < height + 2; y++){
-	    for(int x = 0; x < width + 2; x++) {
+	for(int y = PADDING; y < height + PADDING; y++){
+	    for(int x = PADDING; x < width + PADDING; x++) {
 		squares[x][y] = SquareType.EMPTY;
 	    }
 	}
@@ -47,24 +50,129 @@ public class Board {
 	    falling = tetrominoMaker.getPoly(random.nextInt(tetrominoMaker.getNumberOfTypes()));
 	    fallingX = falling.getBlock().length == 2 ? (int) width/2 - 1 : (int)width/2 - 2;
 	    fallingY = 0;
+	    if(hasCollision()){
+		falling = null;
+	    }
 
 	}else{
-	    fallingY += 1;
+	    fall();
+	}
+
+	while(hasFullRow() != -1){
+	    removeRow(hasFullRow());
+	}
+
+	notifyListeners();
+    }
+    /*
+    public void removeRow(int row){
+    	System.out.println("Begining...");
+    	for(int y = row; y > height; y--){
+    	    for(int x = PADDING; x < width + PADDING; x++){
+    		squares[y][x] = squares[y + 1][x];
+    	    }
+    	}
+    	System.out.println("Second...");
+    	for(int x = PADDING; x < width; x++){
+    	    squares[0][x] = SquareType.EMPTY;
+    	}
+    	System.out.println("Done...");
+    	notifyListeners();
+    }*/
+
+    public void removeRow(int row){
+	for(int x = PADDING; x < width + PADDING; x++){
+	    for(int y = row + PADDING; y > PADDING; y--){
+		squares[x][y] = squares[x][y - 1];
+	    }
+	}
+	for(int x = PADDING; x < width + PADDING; x++){
+	    squares[x][PADDING] = SquareType.EMPTY;
 	}
 	notifyListeners();
     }
 
+    public int hasFullRow(){
+	int c = 0;
+	for(int y = 0; y < height; y++){
+	    for(int x = 0;x < width; x++){
+		if(getSquare(x,y) != SquareType.EMPTY){
+		    c++;
+		}
+	    }
+	    if(c == width){
+		return y;
+	    }else{
+		c = 0;
+	    }
+	}
+	return -1;
+    }
+
+    public void fall(){
+	fallingY++;
+	if(hasCollision()){
+	    fallingY --;
+	    addFallingToBoard();
+	}
+    }
+
+    public void addFallingToBoard(){
+	for(int y = 0; y < falling.getBlock()[0].length; y++){
+	    for(int x = 0; x < falling.getBlock().length; x++){
+		if(falling.getBlock()[x][y] != SquareType.EMPTY){
+		    squares[fallingX + x + PADDING][fallingY + y + PADDING] = falling.getBlock()[x][y];
+		}
+
+	    }
+	}
+	falling = null;
+    }
+
     public boolean hasCollision(){
-	return true;
+	for (int y = 0; y < falling.getBlock()[0].length; y++){
+	    for(int x = 0; x < falling.getBlock().length; x++){
+		if (getSquare(fallingX + x, fallingY + y) != SquareType.EMPTY &&
+			falling.getBlock()[x][y] != SquareType.EMPTY){
+		    return true;
+
+		}
+	    }
+	}
+	return false;
     }
 
     public void moveFallingRight(){
 	fallingX++;
+
+	if(hasCollision()){
+	    fallingX--;
+	}
+
 	notifyListeners();
     }
 
     public void moveFallingLeft(){
 	fallingX--;
+
+	if(hasCollision()){
+	    fallingX++;
+	}
+
+	notifyListeners();
+    }
+
+    public void rotate(){
+	falling = falling.rotateRight();
+	while(hasCollision()){
+	    if(fallingX < PADDING){
+		fallingX++;
+	    }else if(fallingX > width - falling.getBlock().length){
+		fallingX--;
+	    }else{
+		fallingY--;
+	    }
+	}
 	notifyListeners();
     }
 
@@ -109,7 +217,10 @@ public class Board {
     }
 
     public SquareType getSquare(int x, int y){
-	return squares[x + 2][y + 2];
+	return squares[x + PADDING][y + PADDING];
     }
 
+    public boolean isGameOver() {
+	return gameOver;
+    }
 }

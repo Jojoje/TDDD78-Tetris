@@ -16,7 +16,12 @@ public class BoardTest {
 
 	final Action doOneStep = new AbstractAction() {
 	    public void actionPerformed(ActionEvent e) {
-		board.tick();
+		if(!board.isGameOver()){
+		    board.tick();
+		}
+		else{
+
+		}
 
 	    }
 	};
@@ -26,4 +31,5 @@ public class BoardTest {
    	clockTimer.start();
 	//clockTimer.stop();
     }
+
 }

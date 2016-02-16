@@ -33,21 +33,54 @@ public class TetrisComponent extends JComponent implements BoardListener {
 	InputMap arrows = this.getInputMap(this.WHEN_IN_FOCUSED_WINDOW);
 	arrows.put(KeyStroke.getKeyStroke("RIGHT"),"Right");
 	arrows.put(KeyStroke.getKeyStroke("LEFT"), "Left");
+	arrows.put(KeyStroke.getKeyStroke("UP"), "Up");
+	arrows.put(KeyStroke.getKeyStroke("DOWN"), "Down");
+
 
 	ActionMap act = this.getActionMap();
 	act.put("Right", new RightAction());
 	act.put("Left", new LeftAction());
+	act.put("Up", new UpAction());
+	act.put("Down", new DownAction());
+    }
+
+    private class UpAction extends AbstractAction{
+    	@Override public void actionPerformed(final ActionEvent e) {
+    	    if(board.getFalling() != null){
+		if(board.getFalling() != null){
+		    board.rotate();
+		}
+
+    	    }
+
+    	}
+    }
+
+    private class DownAction extends AbstractAction{
+    	@Override public void actionPerformed(final ActionEvent e) {
+	    while(board.getFalling() != null){
+		board.fall();
+		board.notifyListeners();
+	    }
+
+    	}
     }
 
     private class RightAction extends AbstractAction{
 	@Override public void actionPerformed(final ActionEvent e) {
-	    board.moveFallingRight();
+	    if(board.getFalling() != null){
+		board.moveFallingRight();
+	    }
+
 	}
     }
 
     private class LeftAction extends AbstractAction{
     	@Override public void actionPerformed(final ActionEvent e) {
-    	    board.moveFallingLeft();
+	    if(board.getFalling() != null){
+		board.moveFallingLeft();
+	    }
+
     	}
     }
 
@@ -85,7 +118,7 @@ public class TetrisComponent extends JComponent implements BoardListener {
 	return ((board.getFalling() != null) &&
 		((board.getFallingX() <= x && (board.getFallingX() + board.getFalling().getBlock().length) > x) &&
 		(board.getFallingY() <= y && board.getFallingY() + board.getFalling().getBlock()[0].length > y) &&
-		!(board.getFalling().getBlock()[1][1] == SquareType.EMPTY)));
+		(board.getFalling().getBlock()[x - board.getFallingX()][y - board.getFallingY()] != SquareType.EMPTY)));
     }
 
     @Override public Dimension getPreferredSize(){

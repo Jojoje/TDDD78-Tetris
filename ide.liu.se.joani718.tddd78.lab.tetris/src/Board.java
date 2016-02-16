@@ -8,6 +8,7 @@ public class Board {
 
     private SquareType[][] squares;
     private int width, height;
+    private int score;
     private Random random;
 
     private Poly falling = null;
@@ -21,6 +22,7 @@ public class Board {
     public Board(final int width, final int height) {
 	this.width = width;
 	this.height = height;
+	score = 0;
 	random = new Random();
 
 	tetrominoMaker = new TetrominoMaker();
@@ -57,28 +59,28 @@ public class Board {
 	}else{
 	    fall();
 	}
-
+	int removedRows = 0;
 	while(hasFullRow() != -1){
 	    removeRow(hasFullRow());
+	    removedRows++;
+	}
+	switch(removedRows){
+	    case(1):
+		score += 100;
+		break;
+	    case(2):
+		score += 300;
+		break;
+	    case(3):
+		score += 500;
+		break;
+	    case(4):
+	    	score += 800;
+		break;
 	}
 
 	notifyListeners();
     }
-    /*
-    public void removeRow(int row){
-    	System.out.println("Begining...");
-    	for(int y = row; y > height; y--){
-    	    for(int x = PADDING; x < width + PADDING; x++){
-    		squares[y][x] = squares[y + 1][x];
-    	    }
-    	}
-    	System.out.println("Second...");
-    	for(int x = PADDING; x < width; x++){
-    	    squares[0][x] = SquareType.EMPTY;
-    	}
-    	System.out.println("Done...");
-    	notifyListeners();
-    }*/
 
     public void removeRow(int row){
 	for(int x = PADDING; x < width + PADDING; x++){
@@ -115,6 +117,7 @@ public class Board {
 	    fallingY --;
 	    addFallingToBoard();
 	}
+	notifyListeners();
     }
 
     public void addFallingToBoard(){
@@ -163,8 +166,14 @@ public class Board {
     }
 
     public void rotate(){
+	Poly tempPoly = falling;
 	falling = falling.rotateRight();
-	while(hasCollision()){
+
+	if(hasCollision()){
+	    falling = tempPoly;
+	}
+
+	/*while(hasCollision()){
 	    if(fallingX < PADDING){
 		fallingX++;
 	    }else if(fallingX > width - falling.getBlock().length){
@@ -172,7 +181,10 @@ public class Board {
 	    }else{
 		fallingY--;
 	    }
-	}
+	}*/
+
+
+
 	notifyListeners();
     }
 
@@ -222,5 +234,9 @@ public class Board {
 
     public boolean isGameOver() {
 	return gameOver;
+    }
+
+    public int getScore() {
+	return score;
     }
 }

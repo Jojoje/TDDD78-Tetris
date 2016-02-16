@@ -26,7 +26,7 @@ public class BoardTest {
 	    }
 	};
 
-   	final Timer clockTimer = new Timer(1000, doOneStep);
+   	final Timer clockTimer = new Timer(500, doOneStep);
    	clockTimer.setCoalesce(true);
    	clockTimer.start();
 	//clockTimer.stop();

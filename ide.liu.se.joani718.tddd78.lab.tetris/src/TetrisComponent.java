@@ -35,6 +35,7 @@ public class TetrisComponent extends JComponent implements BoardListener {
 	arrows.put(KeyStroke.getKeyStroke("LEFT"), "Left");
 	arrows.put(KeyStroke.getKeyStroke("UP"), "Up");
 	arrows.put(KeyStroke.getKeyStroke("DOWN"), "Down");
+	arrows.put(KeyStroke.getKeyStroke("SPACE"), "Space");
 
 
 	ActionMap act = this.getActionMap();
@@ -42,7 +43,17 @@ public class TetrisComponent extends JComponent implements BoardListener {
 	act.put("Left", new LeftAction());
 	act.put("Up", new UpAction());
 	act.put("Down", new DownAction());
+	act.put("Space", new SpaceAction());
     }
+
+    private class SpaceAction extends AbstractAction{
+    	@Override public void actionPerformed(final ActionEvent e) {
+	    while(board.getFalling() != null){
+		board.fall();
+	    }
+    	}
+    }
+
 
     private class UpAction extends AbstractAction{
     	@Override public void actionPerformed(final ActionEvent e) {
@@ -58,9 +69,8 @@ public class TetrisComponent extends JComponent implements BoardListener {
 
     private class DownAction extends AbstractAction{
     	@Override public void actionPerformed(final ActionEvent e) {
-	    while(board.getFalling() != null){
+	    if(board.getFalling() != null){
 		board.fall();
-		board.notifyListeners();
 	    }
 
     	}
@@ -108,8 +118,12 @@ public class TetrisComponent extends JComponent implements BoardListener {
 		g2d.setColor(Color.BLACK);
 		g2d.drawLine(x*BLOCK_SIZE,y*BLOCK_SIZE, x*BLOCK_SIZE, (y+1)*BLOCK_SIZE);
 		g2d.drawLine(x*BLOCK_SIZE,y*BLOCK_SIZE, (x+1)*BLOCK_SIZE, y*BLOCK_SIZE);
+
+
 	    }
 	}
+	g2d.setFont(new Font("Times new roman", Font.BOLD, 20));
+	g2d.drawString("Score " + Integer.toString(board.getScore()), 0, 30);
     }
 
 

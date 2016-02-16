@@ -1,7 +1,7 @@
 public class TetrominoMaker {
 
     public int getNumberOfTypes() {
-	return SquareType.values().length;
+	return SquareType.values().length - 2;
     }
 
     public Poly getPoly(int n) {

@@ -1,10 +1,8 @@
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class Board {
-    private final int NUMBER_OF_SQUARETYPE = 8;
 
     private SquareType[][] squares;
     public int width, height;
@@ -16,6 +14,7 @@ public class Board {
     private TetrominoMaker tetrominoMaker;
     private List<BoardListener> boardListeners;
 
+
     public Board(final int width, final int height) {
 	this.width = width;
 	this.height = height;
@@ -24,10 +23,20 @@ public class Board {
 	tetrominoMaker = new TetrominoMaker();
 	boardListeners = new ArrayList<BoardListener>();
 
-	squares = new SquareType[width][height];
+	squares = new SquareType[this.width + 4][this.height + 4];
 
-	for(int y = 0; y < height; y++){
-	    for(int x = 0; x < width; x++) {
+	primeBoard();
+    }
+
+    public void primeBoard(){
+	for(int y = 0; y < this.height; y++){
+	    for(int x = 0; x < this.width; x++) {
+		squares[x][y] = SquareType.OUTSIDE;
+	    }
+	}
+
+	for(int y = 0; y < height + 2; y++){
+	    for(int x = 0; x < width + 2; x++) {
 		squares[x][y] = SquareType.EMPTY;
 	    }
 	}
@@ -35,7 +44,7 @@ public class Board {
 
     public void tick(){
 	if(falling == null){
-	    falling = tetrominoMaker.createPoly(SquareType.values()[random.nextInt(NUMBER_OF_SQUARETYPE)]);
+	    falling = tetrominoMaker.getPoly(random.nextInt(tetrominoMaker.getNumberOfTypes()));
 	    fallingX = falling.getBlock().length == 2 ? (int) width/2 - 1 : (int)width/2 - 2;
 	    fallingY = 0;
 
@@ -43,6 +52,10 @@ public class Board {
 	    fallingY += 1;
 	}
 	notifyListeners();
+    }
+
+    public boolean hasCollision(){
+	return true;
     }
 
     public void moveFallingRight(){
@@ -96,7 +109,7 @@ public class Board {
     }
 
     public SquareType getSquare(int x, int y){
-	return squares[x][y];
+	return squares[x + 2][y + 2];
     }
 
 }

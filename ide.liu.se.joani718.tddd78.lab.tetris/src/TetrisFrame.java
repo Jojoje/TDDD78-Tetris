@@ -2,6 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * JFrame that contains:
+ * menubar,
+ * a tetrisComponent or a HighscoreComponent
+ */
 public class TetrisFrame extends JFrame{
     private Board board;
     private TetrisComponent tetrisComponent;

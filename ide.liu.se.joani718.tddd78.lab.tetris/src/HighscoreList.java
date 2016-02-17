@@ -1,10 +1,12 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class HighscoreList {
 
     private static final HighscoreList INSTANCE = new HighscoreList();
     private List<Highscore> highscore;
+    private ScoreComparator scoreComparator = new ScoreComparator();
 
     private HighscoreList() {
 	highscore = new ArrayList<Highscore>();
@@ -20,5 +22,9 @@ public class HighscoreList {
 
     public List<Highscore> getHighscore() {
 	return highscore;
+    }
+
+    public void sort(){
+	Collections.sort(highscore, scoreComparator);
     }
 }

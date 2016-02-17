@@ -3,6 +3,7 @@ import java.awt.*;
 import javax.swing.*;
 
 public class HighscoreComponent extends JComponent{
+    public static final int FONT_SIZE = 20;
     private HighscoreList highscore;
     private Font font;
     private int width;
@@ -11,7 +12,7 @@ public class HighscoreComponent extends JComponent{
 
     public HighscoreComponent(HighscoreList highscore, int width, int height, int BLOCK_SIZE) {
 	this.highscore = highscore;
-	font = new Font("Times new roman", Font.BOLD, 20);
+	font = new Font("Times new roman", Font.BOLD, FONT_SIZE);
 	this.width = width;
 	this.height = height;
 	this.BLOCK_SIZE = BLOCK_SIZE;

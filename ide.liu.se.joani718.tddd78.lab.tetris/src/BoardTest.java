@@ -3,6 +3,7 @@ import java.awt.event.ActionEvent;
 
 public class BoardTest {
 
+    public static final int TIME_BETWEEN_TICKS = 500;
     public static Board board;
     private static TetrisFrame frame;
     private static HighscoreList highscore;
@@ -25,6 +26,7 @@ public class BoardTest {
 		else{
 		    String input = JOptionPane.showInputDialog("Please input a name");
 		    highscore.addHighscore(input, board.getScore());
+		    highscore.sort();
 		    frame.showHighscore(highscore);
 		    clockTimer.stop();
 
@@ -33,7 +35,7 @@ public class BoardTest {
 	    }
 	};
 
-   	clockTimer = new Timer(500, doOneStep);
+   	clockTimer = new Timer(TIME_BETWEEN_TICKS, doOneStep);
    	clockTimer.setCoalesce(true);
    	clockTimer.start();
     }

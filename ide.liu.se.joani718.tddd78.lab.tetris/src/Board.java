@@ -1,10 +1,13 @@
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class Board {
 
+    public static final int SCORE_OF_2_ROWS = 300;
+    public static final int SCORE_OF_3_ROWS = 500;
+    public static final int SCORE_OF_4_ROWS = 800;
+    public static final int SCORE_OF_1_ROWS = 100;
     private final int PADDING = 2;
 
     private SquareType[][] squares;
@@ -71,16 +74,16 @@ public class Board {
 	}
 	switch(removedRows){
 	    case(1):
-		score += 100;
+		score += SCORE_OF_1_ROWS;
 		break;
 	    case(2):
-		score += 300;
+		score += SCORE_OF_2_ROWS;
 		break;
 	    case(3):
-		score += 500;
+		score += SCORE_OF_3_ROWS;
 		break;
 	    case(4):
-	    	score += 800;
+	    	score += SCORE_OF_4_ROWS;
 		break;
 	}
 

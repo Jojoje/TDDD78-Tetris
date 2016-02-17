@@ -136,8 +136,8 @@ public class TetrisComponent extends JComponent implements BoardListener {
     }
 
     @Override public Dimension getPreferredSize(){
-	return new Dimension((board.getWidth())*BLOCK_SIZE + SPACE_BETWEEN_BLOCKS,
-			     (board.getHeight())*BLOCK_SIZE + SPACE_BETWEEN_BLOCKS);
+	return new Dimension((board.getWidth())*BLOCK_SIZE,
+			     (board.getHeight())*BLOCK_SIZE);
     }
 
     @Override public void boardChanged() {

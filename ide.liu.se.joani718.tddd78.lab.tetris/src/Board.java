@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -11,19 +12,21 @@ public class Board {
     private int score;
     private Random random;
 
-    private Poly falling = null;
+    private Poly falling;
     private int fallingX, fallingY;
 
     private TetrominoMaker tetrominoMaker;
     private List<BoardListener> boardListeners;
 
-    private boolean gameOver = false;
+    private boolean gameOver;
 
     public Board(final int width, final int height) {
 	this.width = width;
 	this.height = height;
 	score = 0;
 	random = new Random();
+	gameOver = false;
+	falling = null;
 
 	tetrominoMaker = new TetrominoMaker();
 	boardListeners = new ArrayList<BoardListener>();
@@ -54,6 +57,8 @@ public class Board {
 	    fallingY = 0;
 	    if(hasCollision()){
 		falling = null;
+		gameOver = true;
+
 	    }
 
 	}else{

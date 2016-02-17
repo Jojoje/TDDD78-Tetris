@@ -8,7 +8,7 @@ public class Board {
     public static final int SCORE_OF_3_ROWS = 500;
     public static final int SCORE_OF_4_ROWS = 800;
     public static final int SCORE_OF_1_ROWS = 100;
-    private final int PADDING = 2;
+    private static final int PADDING = 2;
 
     private SquareType[][] squares;
     private int width, height;
@@ -56,7 +56,7 @@ public class Board {
     public void tick(){
 	if(falling == null){
 	    falling = tetrominoMaker.getPoly(random.nextInt(tetrominoMaker.getNumberOfTypes()));
-	    fallingX = falling.getBlock().length == 2 ? (int) width/2 - 1 : (int)width/2 - 2;
+	    fallingX = falling.getBlock().length == 2 ? width / 2 - 1 : width / 2 - 2;
 	    fallingY = 0;
 	    if(hasCollision()){
 		falling = null;
@@ -91,6 +91,12 @@ public class Board {
     }
 
     public void removeRow(int row){
+	/*
+	//TODO Learn how this magic works!
+	for(int x = PADDING; x < width + PADDING; x++){
+	    System.arraycopy(squares[x], PADDING, squares[x], PADDING + 1, row + PADDING - 2);
+	}
+	*/
 	for(int x = PADDING; x < width + PADDING; x++){
 	    for(int y = row + PADDING; y > PADDING; y--){
 		squares[x][y] = squares[x][y - 1];
@@ -102,7 +108,7 @@ public class Board {
 	notifyListeners();
     }
 
-    public int hasFullRow(){
+    @SuppressWarnings("NonBooleanMethodNameMayNotStartWithQuestion") public int hasFullRow(){
 	int c = 0;
 	for(int y = 0; y < height; y++){
 	    for(int x = 0;x < width; x++){
@@ -192,16 +198,6 @@ public class Board {
 	}*/
 
 
-
-	notifyListeners();
-    }
-
-    public void randomiseBoard(){
-	for(int y = 0; y < height; y++){
-	    for(int x = 0; x < width; x++) {
-		squares[x][y] = SquareType.values()[random.nextInt(8)];
-	    }
-	}
 
 	notifyListeners();
     }

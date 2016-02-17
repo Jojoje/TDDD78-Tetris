@@ -9,8 +9,13 @@ public class TetrominoMaker {
 	return poly;
     }
 
-    public Poly createPoly(SquareType st){
+    private Poly createPoly(SquareType st){
 
+	/*
+	*Creates a Poly depending on type but
+	*should not be SquareType.EMPTY or SquareType.OUTSIDE
+	 */
+	//noinspection EnumSwitchStatementWhichMissesCases
 	switch(st){
 	    case I:
 		return createIBlock();
@@ -27,7 +32,7 @@ public class TetrominoMaker {
 	    case O:
 		return createOBlock();
 	    default:
-		return null;
+		throw new IllegalArgumentException("st must be of a SquareType not equals to EMPTY or OUTSIDE");
 	}
 
     }

@@ -1,36 +1,35 @@
 import javax.swing.*;
-import java.awt.Dimension;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.EnumMap;
 import java.util.Map;
 
 public class TetrisComponent extends JComponent implements BoardListener {
+    public static final int FONT_SIZE = 20;
     private final Board board;
-    private final int BLOCK_SIZE = 40;
-    private final int SPACE_BETWEEN_BLOCKS = 1;
+    public static final int BLOCK_SIZE = 40;
 
 
-    private static final Map<SquareType, Color> enumMap =
+    private static final Map<SquareType, Color> ENUM_MAP =
 	    new EnumMap<SquareType,Color>(SquareType.class);
 
 
     public TetrisComponent(final Board board) {
 	this.board = board;
-	enumMap.put(SquareType.I, Color.CYAN);
-	enumMap.put(SquareType.S, Color.GREEN);
-	enumMap.put(SquareType.J, Color.BLUE);
-	enumMap.put(SquareType.L, Color.ORANGE);
-	enumMap.put(SquareType.O, Color.YELLOW);
-	enumMap.put(SquareType.T, Color.PINK);
-	enumMap.put(SquareType.Z, Color.RED);
-	enumMap.put(SquareType.EMPTY, Color.WHITE);
+	ENUM_MAP.put(SquareType.I, Color.CYAN);
+	ENUM_MAP.put(SquareType.S, Color.GREEN);
+	ENUM_MAP.put(SquareType.J, Color.BLUE);
+	ENUM_MAP.put(SquareType.L, Color.ORANGE);
+	ENUM_MAP.put(SquareType.O, Color.YELLOW);
+	ENUM_MAP.put(SquareType.T, Color.PINK);
+	ENUM_MAP.put(SquareType.Z, Color.RED);
+	ENUM_MAP.put(SquareType.EMPTY, Color.WHITE);
 
 	setupKeyBinds();
     }
 
     public void setupKeyBinds(){
-	InputMap arrows = this.getInputMap(this.WHEN_IN_FOCUSED_WINDOW);
+	InputMap arrows = this.getInputMap(WHEN_IN_FOCUSED_WINDOW);
 	arrows.put(KeyStroke.getKeyStroke("RIGHT"),"Right");
 	arrows.put(KeyStroke.getKeyStroke("LEFT"), "Left");
 	arrows.put(KeyStroke.getKeyStroke("UP"), "Up");
@@ -97,22 +96,21 @@ public class TetrisComponent extends JComponent implements BoardListener {
     @Override protected void paintComponent(Graphics g){
 	super.paintComponent(g);
 	final Graphics2D g2d = (Graphics2D) g;
-
-	int cornerX, cornerY;
+	final int SPACE = 1;
 	for(int y = 0; y < board.getHeight(); y++){
 	    for(int x = 0; x < board.getWidth(); x++) {
 		if(zoneOfFalling(x,y)){
-		    g2d.setColor(enumMap.get(board.getFalling().getBlock()[x - board.getFallingX()][y - board.getFallingY()]));
+		    g2d.setColor(ENUM_MAP.get(board.getFalling().getBlock()[x - board.getFallingX()][y - board.getFallingY()]));
 		}else{
-		    g2d.setColor(enumMap.get(board.getSquare(x,y)));
+		    g2d.setColor(ENUM_MAP.get(board.getSquare(x, y)));
 		}
 
-		cornerX = x*BLOCK_SIZE + SPACE_BETWEEN_BLOCKS;
-		cornerY = y*BLOCK_SIZE + SPACE_BETWEEN_BLOCKS;
+		int cornerX = x * BLOCK_SIZE + SPACE;
+		int cornerY = y * BLOCK_SIZE + SPACE;
 
 		g2d.fillRect(cornerX, cornerY,
-			     BLOCK_SIZE - SPACE_BETWEEN_BLOCKS,
-			     BLOCK_SIZE - SPACE_BETWEEN_BLOCKS);
+			     BLOCK_SIZE - SPACE,
+			     BLOCK_SIZE - SPACE);
 
 
 		g2d.setColor(Color.BLACK);
@@ -122,8 +120,8 @@ public class TetrisComponent extends JComponent implements BoardListener {
 
 	    }
 	}
-	g2d.setFont(new Font("Times new roman", Font.BOLD, 20));
-	g2d.drawString("Score " + Integer.toString(board.getScore()), 0, 30);
+	g2d.setFont(new Font("Times new roman", Font.BOLD, FONT_SIZE));
+	g2d.drawString("Score " + Integer.toString(board.getScore()), 0, FONT_SIZE + 10);
     }
 
 
@@ -143,4 +141,5 @@ public class TetrisComponent extends JComponent implements BoardListener {
     @Override public void boardChanged() {
 	repaint();
     }
+
 }

@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-public class BoardTest {
+public final class BoardTest {
 
     public static final int TIME_BETWEEN_TICKS = 500;
     public static Board board;
@@ -10,6 +10,8 @@ public class BoardTest {
     private static final int ROW = 15;
     private static final int COLUMMN = 10;
     public static Timer clockTimer;
+
+    private BoardTest() {}
 
     public static void main(String[] args){
 
@@ -29,7 +31,6 @@ public class BoardTest {
 		    highscore.sort();
 		    frame.showHighscore(highscore);
 		    clockTimer.stop();
-
 		}
 
 	    }

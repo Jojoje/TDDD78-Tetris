@@ -12,8 +12,6 @@ public class TetrisFrame extends JFrame{
     private TetrisComponent tetrisComponent;
     private HighscoreComponent highscoreComponent;
 
-    private final int FONT_SIZE = 20;
-
     public TetrisFrame(Board board) {
 	super("Jojoje's Tetris");
 	this.board = board;
@@ -25,13 +23,13 @@ public class TetrisFrame extends JFrame{
 	this.add(tetrisComponent);
 
 	this.pack();
-	this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+	this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	this.setVisible(true);
 
     }
 
     private void createMenus(){
-	final JMenuBar bar = new JMenuBar();
+	final JMenuBar menuBar = new JMenuBar();
 
 	final JMenu options = new JMenu("Options");
 	final JMenuItem reset = new JMenuItem("Reset");
@@ -40,16 +38,16 @@ public class TetrisFrame extends JFrame{
 	quit.addActionListener(new ExitListener());
 	options.add(reset);
 	options.add(quit);
-	bar.add(options);
+	menuBar.add(options);
 
 	final JMenu help = new JMenu("Help");
 	final JMenuItem howToPlay = new JMenuItem("How to play");
 	howToPlay.addActionListener(new HowToPlayListener(this));
 	help.add(howToPlay);
-	bar.add(Box.createHorizontalGlue());
-	bar.add(help);
+	menuBar.add(Box.createHorizontalGlue());
+	menuBar.add(help);
 
-	this.setJMenuBar(bar);
+	this.setJMenuBar(menuBar);
     }
 
     private class ExitListener implements ActionListener{
@@ -64,10 +62,10 @@ public class TetrisFrame extends JFrame{
 	}
     }
 
-    private class HowToPlayListener implements ActionListener{
+    private final class HowToPlayListener implements ActionListener{
 	private final JFrame frame;
 
-	public HowToPlayListener(final JFrame frame){this.frame=frame;}
+	private HowToPlayListener(final JFrame frame){this.frame=frame;}
 
     	public void actionPerformed(final ActionEvent e) {
 	    frame.setVisible(false);
@@ -75,8 +73,8 @@ public class TetrisFrame extends JFrame{
     }
 
     public void showHighscore(HighscoreList highscore){
+	highscoreComponent = new HighscoreComponent(highscore, board.getWidth(),board.getHeight());
 	this.remove(tetrisComponent);
-	highscoreComponent = new HighscoreComponent(highscore, board.getWidth(),board.getHeight(), 40);
 	this.add(highscoreComponent);
 	this.pack();
 
@@ -84,6 +82,7 @@ public class TetrisFrame extends JFrame{
 
     public void resetGame(){
 	this.remove(highscoreComponent);
+	//TODO Ask if this is okay, if not how to do.
 	BoardTest.board = new Board(board.getWidth(), board.getHeight());
 	board = BoardTest.board;
 	tetrisComponent = new TetrisComponent(BoardTest.board);

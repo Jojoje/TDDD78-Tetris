@@ -1,12 +1,14 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
-public class HighscoreList {
+public final class HighscoreList {
 
     private static final HighscoreList INSTANCE = new HighscoreList();
     private List<Highscore> highscore;
-    private ScoreComparator scoreComparator = new ScoreComparator();
+    //TODO Learn about warning
+    private Comparator scoreComparator = new ScoreComparator();
 
     private HighscoreList() {
 	highscore = new ArrayList<Highscore>();
@@ -25,6 +27,7 @@ public class HighscoreList {
     }
 
     public void sort(){
+	//TODO Learn about this
 	Collections.sort(highscore, scoreComparator);
     }
 }

@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 /**
- * JFrame that contains:
+ * JFrame obeject that contains:
  * menubar,
  * a tetrisComponent or a HighscoreComponent
  */

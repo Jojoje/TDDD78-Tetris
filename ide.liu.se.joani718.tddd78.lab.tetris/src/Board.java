@@ -1,7 +1,9 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
+/**
+*Calculates and keep tracks on what is ont the tetris gameboard.
+ */
 public class Board {
 
     private static final int SCORE_OF_1_ROWS = 100;
@@ -15,11 +17,12 @@ public class Board {
     private int score;
     private Random random;
 
-	private Poly falling;
-	private int fallingX, fallingY;
+    private Poly falling;
+    private int fallingX, fallingY;
 
-	private TetrominoMaker tetrominoMaker;
-	private List<BoardListener> boardListeners;
+    private TetrominoMaker tetrominoMaker;
+    private List<BoardListener> boardListeners;
+    private CollisionHandler collisionHandler;
 
     private boolean gameOver;
 
@@ -30,9 +33,10 @@ public class Board {
 	random = new Random();
 	gameOver = false;
 	falling = null;
+	collisionHandler = new DefaultCollisionHandler();
 
 	tetrominoMaker = new TetrominoMaker();
-	boardListeners = new ArrayList<>();
+	boardListeners = new ArrayList<BoardListener>();
 
 	squares = new SquareType[this.width + PADDING*2][this.height + PADDING*2];
 
@@ -58,7 +62,7 @@ public class Board {
 	    falling = tetrominoMaker.getPoly(random.nextInt(tetrominoMaker.getNumberOfTypes()));
 	    fallingX = falling.getBlock().length == 2 ? width / 2 - 1 : width / 2 - 2;
 	    fallingY = 0;
-	    if(hasCollision()){
+	    if(collisionHandler.hasCollision(this)){
 		falling = null;
 		gameOver = true;
 
@@ -120,7 +124,7 @@ public class Board {
 
     public void fall(){
 	fallingY++;
-	if(hasCollision()){
+	if(collisionHandler.hasCollision(this)){
 	    fallingY --;
 	    addFallingToBoard();
 	}
@@ -138,7 +142,7 @@ public class Board {
 	}
 	falling = null;
     }
-
+    /*
     public boolean hasCollision(){
 	for (int y = 0; y < falling.getBlock()[0].length; y++){
 	    for(int x = 0; x < falling.getBlock().length; x++){
@@ -150,12 +154,12 @@ public class Board {
 	    }
 	}
 	return false;
-    }
+    }*/
 
     public void moveFallingRight(){
 	fallingX++;
 
-	if(hasCollision()){
+	if(collisionHandler.hasCollision(this)){
 	    fallingX--;
 	}
 
@@ -165,7 +169,7 @@ public class Board {
     public void moveFallingLeft(){
 	fallingX--;
 
-	if(hasCollision()){
+	if(collisionHandler.hasCollision(this)){
 	    fallingX++;
 	}
 
@@ -176,7 +180,7 @@ public class Board {
 	Poly tempPoly = falling;
 	falling = falling.rotateRight();
 
-	if(hasCollision()){
+	if(collisionHandler.hasCollision(this)){
 	    falling = tempPoly;
 	}
 

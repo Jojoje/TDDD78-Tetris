@@ -6,6 +6,14 @@ public class Poly {
 
     }
 
+    public int getBlockSize(){
+        return block.length;
+    }
+
+    public SquareType getSquareAt(int x, int y){
+        return block[x][y];
+    }
+
     public Poly rotateRight(){
     	int size = block.length;
         Poly newPoly = new Poly(new SquareType[size][size]);

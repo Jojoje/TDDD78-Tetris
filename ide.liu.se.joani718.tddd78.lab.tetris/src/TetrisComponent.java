@@ -10,7 +10,7 @@ public class TetrisComponent extends JComponent implements BoardListener {
     public static final int BLOCK_SIZE = 40;
 
 
-    private static final Map<SquareType, Color> ENUM_MAP = new EnumMap<>(SquareType.class);
+    private static final Map<SquareType, Color> ENUM_MAP = new EnumMap<SquareType, Color>(SquareType.class);
 
 
     public TetrisComponent(final Board board) {
@@ -95,7 +95,7 @@ public class TetrisComponent extends JComponent implements BoardListener {
     @Override protected void paintComponent(Graphics g){
 	super.paintComponent(g);
 	final Graphics2D g2d = (Graphics2D) g;
-	final int SPACE = 1;
+	final int border = 1;
 	for(int y = 0; y < board.getHeight(); y++){
 	    for(int x = 0; x < board.getWidth(); x++) {
 		if(zoneOfFalling(x,y)){
@@ -104,12 +104,12 @@ public class TetrisComponent extends JComponent implements BoardListener {
 		    g2d.setColor(ENUM_MAP.get(board.getSquare(x, y)));
 		}
 
-		int cornerX = x * BLOCK_SIZE + SPACE;
-		int cornerY = y * BLOCK_SIZE + SPACE;
+		int cornerX = x * BLOCK_SIZE + border;
+		int cornerY = y * BLOCK_SIZE + border;
 
 		g2d.fillRect(cornerX, cornerY,
-			     BLOCK_SIZE - SPACE,
-			     BLOCK_SIZE - SPACE);
+			     BLOCK_SIZE - border,
+			     BLOCK_SIZE - border);
 
 
 		g2d.setColor(Color.BLACK);

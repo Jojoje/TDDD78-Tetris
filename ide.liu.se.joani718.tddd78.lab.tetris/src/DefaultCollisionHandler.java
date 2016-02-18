@@ -10,4 +10,8 @@ public class DefaultCollisionHandler implements CollisionHandler{
 	}
 	return false;
     }
+
+    @Override public String getDescription() {
+	return "Standard";
+    }
 }

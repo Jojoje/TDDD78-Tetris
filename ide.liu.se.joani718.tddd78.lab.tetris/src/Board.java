@@ -14,6 +14,7 @@ public class Board {
 
     private SquareType[][] squares;
     private int width, height;
+    private int numberOfFalledBlocks = 1;
     private int score;
     private Random random;
 
@@ -36,7 +37,7 @@ public class Board {
 	collisionHandler = new DefaultCollisionHandler();
 
 	tetrominoMaker = new TetrominoMaker();
-	boardListeners = new ArrayList<BoardListener>();
+	boardListeners = new ArrayList<>();
 
 	squares = new SquareType[this.width + PADDING*2][this.height + PADDING*2];
 
@@ -44,8 +45,8 @@ public class Board {
     }
 
     public void primeBoard(){
-	for(int y = 0; y < this.height; y++){
-	    for(int x = 0; x < this.width; x++) {
+	for(int y = 0; y < this.height + 2*PADDING; y++){
+	    for(int x = 0; x < this.width + 2*PADDING; x++) {
 		squares[x][y] = SquareType.OUTSIDE;
 	    }
 	}
@@ -58,14 +59,22 @@ public class Board {
     }
 
     public void tick(){
+	if(numberOfFalledBlocks % 10 == 0){
+	    collisionHandler = new Fallthrough();
+	}
+	if(numberOfFalledBlocks % 10 == 1){
+	    collisionHandler = new DefaultCollisionHandler();
+	}
+
 	if(falling == null){
 	    falling = tetrominoMaker.getPoly(random.nextInt(tetrominoMaker.getNumberOfTypes()));
 	    fallingX = falling.getBlock().length == 2 ? width / 2 - 1 : width / 2 - 2;
 	    fallingY = 0;
+	    numberOfFalledBlocks++;
 	    if(collisionHandler.hasCollision(this)){
 		falling = null;
 		gameOver = true;
-
+		numberOfFalledBlocks--;
 	    }
 
 	}else{
@@ -92,6 +101,10 @@ public class Board {
 	}
 
 	notifyListeners();
+    }
+
+    public void removeSquare(int x, int y){
+	squares[x + PADDING][y + PADDING] = SquareType.EMPTY;
     }
 
     public void removeRow(int row){
@@ -225,6 +238,9 @@ public class Board {
 
 	public void resetBoard(){
 		primeBoard();
+	    	falling = null;
+	    	fallingX = 0;
+	    	fallingY = 0;
 		score = 0;
 		gameOver = false;
 	}
@@ -245,5 +261,9 @@ public class Board {
 
     public int getScore() {
 	return score;
+    }
+
+    public CollisionHandler getCollisionHandler() {
+	return collisionHandler;
     }
 }

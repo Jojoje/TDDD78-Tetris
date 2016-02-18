@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public final class HighscoreList {
@@ -8,7 +7,7 @@ public final class HighscoreList {
     private static final HighscoreList INSTANCE = new HighscoreList();
     private List<Highscore> highscore;
     //TODO Learn about warning
-    private Comparator scoreComparator = new ScoreComparator();
+    private ScoreComparator scoreComparator = new ScoreComparator();
 
     private HighscoreList() {
 	highscore = new ArrayList<>();

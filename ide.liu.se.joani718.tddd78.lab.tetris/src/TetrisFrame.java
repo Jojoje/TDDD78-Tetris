@@ -81,13 +81,18 @@ public class TetrisFrame extends JFrame{
     }
 
     public void resetGame(){
-	this.remove(highscoreComponent);
-	board.resetBoard();
-	tetrisComponent = new TetrisComponent(board);
-	board.addBoardListener(tetrisComponent);
-	this.add(tetrisComponent);
-	this.pack();
-	BoardTest.clockTimer.start();
+	if(highscoreComponent != null){
+	    this.remove(highscoreComponent);
+	    	board.resetBoard();
+	    	tetrisComponent = new TetrisComponent(board);
+	    	board.addBoardListener(tetrisComponent);
+	    	this.add(tetrisComponent);
+	    	this.pack();
+	    	BoardTest.clockTimer.start();
+	}else{
+	    board.resetBoard();
+	}
+
     }
 
 }

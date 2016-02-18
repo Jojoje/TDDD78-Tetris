@@ -10,7 +10,7 @@ public class TetrisComponent extends JComponent implements BoardListener {
     public static final int BLOCK_SIZE = 40;
 
 
-    private static final Map<SquareType, Color> ENUM_MAP = new EnumMap<SquareType, Color>(SquareType.class);
+    private static final Map<SquareType, Color> ENUM_MAP = new EnumMap<>(SquareType.class);
 
 
     public TetrisComponent(final Board board) {
@@ -121,6 +121,7 @@ public class TetrisComponent extends JComponent implements BoardListener {
 	}
 	g2d.setFont(new Font("Times new roman", Font.BOLD, FONT_SIZE));
 	g2d.drawString("Score " + Integer.toString(board.getScore()), 0, FONT_SIZE + 10);
+	g2d.drawString(board.getCollisionHandler().getDescription(), board.getWidth() * BLOCK_SIZE - 110, FONT_SIZE + 10);
     }
 
 

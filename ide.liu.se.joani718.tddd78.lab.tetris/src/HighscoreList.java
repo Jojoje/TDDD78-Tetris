@@ -11,7 +11,7 @@ public final class HighscoreList {
     private Comparator scoreComparator = new ScoreComparator();
 
     private HighscoreList() {
-	highscore = new ArrayList<Highscore>();
+	highscore = new ArrayList<>();
     }
 
     public static HighscoreList getInstance() {

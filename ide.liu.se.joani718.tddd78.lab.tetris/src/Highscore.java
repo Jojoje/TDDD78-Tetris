@@ -1,3 +1,6 @@
+/**
+ *Highscore keeps a (String)name and an (int)score.
+ */
 public class Highscore {
     private int score;
     private String name;

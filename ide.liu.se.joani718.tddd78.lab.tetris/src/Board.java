@@ -4,10 +4,10 @@ import java.util.Random;
 
 public class Board {
 
-    public static final int SCORE_OF_2_ROWS = 300;
-    public static final int SCORE_OF_3_ROWS = 500;
-    public static final int SCORE_OF_4_ROWS = 800;
-    public static final int SCORE_OF_1_ROWS = 100;
+    private static final int SCORE_OF_1_ROWS = 100;
+    private static final int SCORE_OF_2_ROWS = 300;
+    private static final int SCORE_OF_3_ROWS = 500;
+    private static final int SCORE_OF_4_ROWS = 800;
     private static final int PADDING = 2;
 
     private SquareType[][] squares;
@@ -15,11 +15,11 @@ public class Board {
     private int score;
     private Random random;
 
-    private Poly falling;
-    private int fallingX, fallingY;
+	private Poly falling;
+	private int fallingX, fallingY;
 
-    private TetrominoMaker tetrominoMaker;
-    private List<BoardListener> boardListeners;
+	private TetrominoMaker tetrominoMaker;
+	private List<BoardListener> boardListeners;
 
     private boolean gameOver;
 
@@ -32,7 +32,7 @@ public class Board {
 	falling = null;
 
 	tetrominoMaker = new TetrominoMaker();
-	boardListeners = new ArrayList<BoardListener>();
+	boardListeners = new ArrayList<>();
 
 	squares = new SquareType[this.width + PADDING*2][this.height + PADDING*2];
 
@@ -91,16 +91,9 @@ public class Board {
     }
 
     public void removeRow(int row){
-	/*
-	//TODO Learn how this magic works!
+
 	for(int x = PADDING; x < width + PADDING; x++){
 	    System.arraycopy(squares[x], PADDING, squares[x], PADDING + 1, row + PADDING - 2);
-	}
-	*/
-	for(int x = PADDING; x < width + PADDING; x++){
-	    for(int y = row + PADDING; y > PADDING; y--){
-		squares[x][y] = squares[x][y - 1];
-	    }
 	}
 	for(int x = PADDING; x < width + PADDING; x++){
 	    squares[x][PADDING] = SquareType.EMPTY;
@@ -225,6 +218,12 @@ public class Board {
     public void addBoardListener(BoardListener bl){
 	boardListeners.add(bl);
     }
+
+	public void resetBoard(){
+		primeBoard();
+		score = 0;
+		gameOver = false;
+	}
 
     public void notifyListeners(){
 	for(BoardListener bl : boardListeners){

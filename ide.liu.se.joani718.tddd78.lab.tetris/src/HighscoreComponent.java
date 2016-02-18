@@ -1,9 +1,10 @@
 import java.awt.*;
-
 import javax.swing.*;
-
+/**
+*Subclass of JComponent will match size of TetrisComponent,
+ * holds a HighscoreList it will draw if paintComponent is called.
+ */
 public class HighscoreComponent extends JComponent{
-    public static final int FONT_SIZE = 20;
     private HighscoreList highscore;
     private Font font;
     private int width;
@@ -11,7 +12,7 @@ public class HighscoreComponent extends JComponent{
 
     public HighscoreComponent(HighscoreList highscore, int width, int height) {
 	this.highscore = highscore;
-	font = new Font("Times new roman", Font.BOLD, FONT_SIZE);
+	font = new Font("Times new roman", Font.BOLD, TetrisComponent.FONT_SIZE);
 	this.width = width;
 	this.height = height;
     }

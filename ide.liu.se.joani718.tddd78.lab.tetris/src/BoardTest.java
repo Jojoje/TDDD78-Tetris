@@ -3,12 +3,16 @@ import java.awt.event.ActionEvent;
 
 public final class BoardTest {
 
-    public static final int TIME_BETWEEN_TICKS = 500;
-    public static Board board;
+    private static final int TIME_BETWEEN_TICKS = 500;
+    private static Board board;
     private static TetrisFrame frame;
     private static HighscoreList highscore;
     private static final int ROW = 15;
     private static final int COLUMMN = 10;
+    /**
+    *Game Timer, reason for public is to be
+    * able to stop and start Timer from the game.
+     */
     public static Timer clockTimer;
 
     private BoardTest() {}

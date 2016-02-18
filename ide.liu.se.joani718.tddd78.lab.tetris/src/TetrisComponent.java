@@ -10,8 +10,7 @@ public class TetrisComponent extends JComponent implements BoardListener {
     public static final int BLOCK_SIZE = 40;
 
 
-    private static final Map<SquareType, Color> ENUM_MAP =
-	    new EnumMap<SquareType,Color>(SquareType.class);
+    private static final Map<SquareType, Color> ENUM_MAP = new EnumMap<>(SquareType.class);
 
 
     public TetrisComponent(final Board board) {

@@ -82,10 +82,8 @@ public class TetrisFrame extends JFrame{
 
     public void resetGame(){
 	this.remove(highscoreComponent);
-	//TODO Ask if this is okay, if not how to do.
-	BoardTest.board = new Board(board.getWidth(), board.getHeight());
-	board = BoardTest.board;
-	tetrisComponent = new TetrisComponent(BoardTest.board);
+	board.resetBoard();
+	tetrisComponent = new TetrisComponent(board);
 	board.addBoardListener(tetrisComponent);
 	this.add(tetrisComponent);
 	this.pack();

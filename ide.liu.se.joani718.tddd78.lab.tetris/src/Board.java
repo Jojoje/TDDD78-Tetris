@@ -59,14 +59,22 @@ public class Board {
     }
 
     public void tick(){
-	if(numberOfFalledBlocks % 10 == 0){
-	    collisionHandler = new Fallthrough();
-	}
-	if(numberOfFalledBlocks % 10 == 1){
-	    collisionHandler = new DefaultCollisionHandler();
-	}
+
 
 	if(falling == null){
+	    switch(random.nextInt(2)){
+		case(1):
+		    collisionHandler = new Heavy();
+		    break;
+		case(0):
+		    collisionHandler = new Heavy();
+		    break;
+		default:
+		    if(collisionHandler.getClass() != DefaultCollisionHandler.class){
+			collisionHandler = new DefaultCollisionHandler();
+		    }
+	    }
+
 	    falling = tetrominoMaker.getPoly(random.nextInt(tetrominoMaker.getNumberOfTypes()));
 	    fallingX = falling.getBlock().length == 2 ? width / 2 - 1 : width / 2 - 2;
 	    fallingY = 0;
@@ -103,6 +111,28 @@ public class Board {
 	notifyListeners();
     }
 
+    public boolean canCollapsRow(int fromHeight, int row){
+	for(int y = fromHeight; y < height; y++){
+	    if(getSquare(row, y) == SquareType.EMPTY){
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    public void collapsRow(int fromHeight, int row){
+	int heighestEmpty = 0;
+	for(int y = 0; y < fromHeight; y++){
+	    if(getSquare(row, y) == SquareType.EMPTY){
+		heighestEmpty = y;
+	    }
+	}
+	for(int y = heighestEmpty; y < fromHeight; y++){
+	    setSquare(row, y, getSquare(row, y + 1));
+	}
+
+    }
+
     public void removeSquare(int x, int y){
 	squares[x + PADDING][y + PADDING] = SquareType.EMPTY;
     }
@@ -118,7 +148,7 @@ public class Board {
 	notifyListeners();
     }
 
-    @SuppressWarnings("NonBooleanMethodNameMayNotStartWithQuestion") public int hasFullRow(){
+    public int hasFullRow(){
 	int c = 0;
 	for(int y = 0; y < height; y++){
 	    for(int x = 0;x < width; x++){
@@ -253,6 +283,10 @@ public class Board {
 
     public SquareType getSquare(int x, int y){
 	return squares[x + PADDING][y + PADDING];
+    }
+
+    public void setSquare(int x, int y, SquareType st) {
+	squares[x + PADDING][y + PADDING] = st;
     }
 
     public boolean isGameOver() {

@@ -121,6 +121,10 @@ public class TetrisComponent extends JComponent implements BoardListener {
 	}
 	g2d.setFont(new Font("Times new roman", Font.BOLD, FONT_SIZE));
 	g2d.drawString("Score " + Integer.toString(board.getScore()), 0, FONT_SIZE + 10);
+	/*
+	*This is a magic number i could get rid of if i knowed the width of the font but the Font.getSize()
+	* only return the height. So without using monospace or somehow get the width i cant get around using a magic number.
+	 */
 	g2d.drawString(board.getCollisionHandler().getDescription(), board.getWidth() * BLOCK_SIZE - 110, FONT_SIZE + 10);
     }
 

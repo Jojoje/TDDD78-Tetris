@@ -1,5 +1,3 @@
-import javafx.util.Pair;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,9 +11,9 @@ public class Heavy implements CollisionHandler{
 	    for(int x = 0; x < board.getFalling().getBlockSize(); x++){
 		if (board.getSquare(board.getFallingX() + x, board.getFallingY() + y) != SquareType.EMPTY &&
 		    board.getFalling().getSquareAt(x, y) != SquareType.EMPTY){
-		    if(board.canCollapsRow(y + 1,x)){
-			rowsToCollaps.add(x);
-			fromHeight.add(y);
+		    if(board.canCollapsRow(board.getFallingX() + x, board.getFallingY() + y + 1)){ //&& !board.isEmptyRow(x)){
+			rowsToCollaps.add(board.getFallingX() + x);
+			fromHeight.add(board.getFallingY() + y + 1);
 		    }else{
 			stuckCollision = true;
 		    }

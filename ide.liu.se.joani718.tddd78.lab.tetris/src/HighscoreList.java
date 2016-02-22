@@ -6,7 +6,9 @@ public final class HighscoreList {
 
     private static final HighscoreList INSTANCE = new HighscoreList();
     private List<Highscore> highscore;
-    //TODO Learn about warning
+    /*
+    *Since i know that the only Comparator i will use is the ScoreComparator and i do 
+     */
     private ScoreComparator scoreComparator = new ScoreComparator();
 
     private HighscoreList() {

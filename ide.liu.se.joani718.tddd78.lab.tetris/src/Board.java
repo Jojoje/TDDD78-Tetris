@@ -111,7 +111,7 @@ public class Board {
 	notifyListeners();
     }
 
-    public boolean canCollapsRow(int fromHeight, int row){
+    public boolean canCollapsRow(int row, int fromHeight){
 	for(int y = fromHeight; y < height; y++){
 	    if(getSquare(row, y) == SquareType.EMPTY){
 		return true;
@@ -122,14 +122,17 @@ public class Board {
 
     public void collapsRow(int fromHeight, int row){
 	int heighestEmpty = 0;
-	for(int y = 0; y < fromHeight; y++){
+	for(int y = fromHeight; y < height; y++){
 	    if(getSquare(row, y) == SquareType.EMPTY){
 		heighestEmpty = y;
+		break;
 	    }
 	}
-	for(int y = heighestEmpty; y < fromHeight; y++){
-	    setSquare(row, y, getSquare(row, y + 1));
+
+	for(int y = heighestEmpty; y > fromHeight - 1; y--){
+	    setSquare(row, y, getSquare(row, y - 1));
 	}
+	setSquare(row, fromHeight - 1, SquareType.EMPTY);
 
     }
 

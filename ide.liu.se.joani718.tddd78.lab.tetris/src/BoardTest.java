@@ -1,4 +1,7 @@
-import javax.swing.*;
+import javax.swing.Timer;
+import javax.swing.Action;
+import javax.swing.AbstractAction;
+import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 
 public final class BoardTest {
@@ -11,7 +14,7 @@ public final class BoardTest {
     private static final int COLUMMN = 10;
     /**
     *Game Timer, reason for public is to be
-    * able to stop and start Timer from the game.
+    * able to stop and start Timer from within the game.
      */
     public static Timer clockTimer;
 

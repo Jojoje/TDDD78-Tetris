@@ -14,7 +14,6 @@ public class Board {
 
     private SquareType[][] squares;
     private int width, height;
-    private int numberOfFalledBlocks = 1;
     private int score;
     private Random random;
 
@@ -60,14 +59,13 @@ public class Board {
 
     public void tick(){
 
-
 	if(falling == null){
-	    switch(random.nextInt(2)){
+	    switch(random.nextInt(20)){
 		case(1):
 		    collisionHandler = new Heavy();
 		    break;
 		case(0):
-		    collisionHandler = new Heavy();
+		    collisionHandler = new Fallthrough();
 		    break;
 		default:
 		    if(collisionHandler.getClass() != DefaultCollisionHandler.class){
@@ -78,11 +76,9 @@ public class Board {
 	    falling = tetrominoMaker.getPoly(random.nextInt(tetrominoMaker.getNumberOfTypes()));
 	    fallingX = falling.getBlock().length == 2 ? width / 2 - 1 : width / 2 - 2;
 	    fallingY = 0;
-	    numberOfFalledBlocks++;
 	    if(collisionHandler.hasCollision(this)){
 		falling = null;
 		gameOver = true;
-		numberOfFalledBlocks--;
 	    }
 
 	}else{
@@ -188,19 +184,7 @@ public class Board {
 	}
 	falling = null;
     }
-    /*
-    public boolean hasCollision(){
-	for (int y = 0; y < falling.getBlock()[0].length; y++){
-	    for(int x = 0; x < falling.getBlock().length; x++){
-		if (getSquare(fallingX + x, fallingY + y) != SquareType.EMPTY &&
-			falling.getBlock()[x][y] != SquareType.EMPTY){
-		    return true;
 
-		}
-	    }
-	}
-	return false;
-    }*/
 
     public void moveFallingRight(){
 	fallingX++;
@@ -229,18 +213,6 @@ public class Board {
 	if(collisionHandler.hasCollision(this)){
 	    falling = tempPoly;
 	}
-
-	/*while(hasCollision()){
-	    if(fallingX < PADDING){
-		fallingX++;
-	    }else if(fallingX > width - falling.getBlock().length){
-		fallingX--;
-	    }else{
-		fallingY--;
-	    }
-	}*/
-
-
 
 	notifyListeners();
     }

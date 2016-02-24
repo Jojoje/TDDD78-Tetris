@@ -141,6 +141,7 @@ public class Board {
 	for(int x = PADDING; x < width + PADDING; x++){
 	    System.arraycopy(squares[x], PADDING, squares[x], PADDING + 1, row + PADDING - 2);
 	}
+
 	for(int x = PADDING; x < width + PADDING; x++){
 	    squares[x][PADDING] = SquareType.EMPTY;
 	}

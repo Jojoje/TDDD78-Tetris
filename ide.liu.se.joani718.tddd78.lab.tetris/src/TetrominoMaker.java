@@ -15,7 +15,6 @@ public class TetrominoMaker {
 	*Creates a Poly depending on type but
 	*should not be SquareType.EMPTY or SquareType.OUTSIDE
 	 */
-	//noinspection EnumSwitchStatementWhichMissesCases
 	switch(st){
 	    case I:
 		return createIBlock();

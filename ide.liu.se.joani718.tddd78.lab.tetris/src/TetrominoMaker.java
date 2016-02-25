@@ -9,11 +9,14 @@ public class TetrominoMaker {
 	return poly;
     }
 
+    /**
+     *Creates a Poly depending on type but
+     *should not be SquareType.EMPTY or SquareType.OUTSIDE
+     */
     private Poly createPoly(SquareType st){
 
-	/*
-	*Creates a Poly depending on type but
-	*should not be SquareType.EMPTY or SquareType.OUTSIDE
+	/**
+	 * Dont have cases fot EMPTY or OUTSIDE because thos are not creatable blocks.
 	 */
 	switch(st){
 	    case I:
@@ -122,9 +125,6 @@ public class TetrominoMaker {
     	Poly poly = new Poly(block);
     	return poly;
     }
-
-
-
 
 
     public void fillWithEmpty(SquareType[][] block){

@@ -4,12 +4,23 @@ import java.awt.event.ActionEvent;
 import java.util.EnumMap;
 import java.util.Map;
 
+/**
+ *Paints all the blocks in the Tetrisgame.
+ */
 public class TetrisComponent extends JComponent implements BoardListener {
+    /**
+     * Font size of the tet on the screen
+     */
     public static final int FONT_SIZE = 20;
+    /**
+     * Color of the lines seperating the squares
+     */
+    public static final Color LINE_COLOR = Color.BLACK;
     private final Board board;
+    /**
+     * The block Size of each square in the game.
+     */
     public static final int BLOCK_SIZE = 40;
-
-
     private static final Map<SquareType, Color> ENUM_MAP = new EnumMap<>(SquareType.class);
 
 
@@ -28,15 +39,15 @@ public class TetrisComponent extends JComponent implements BoardListener {
     }
 
     public void setupKeyBinds(){
-	InputMap arrows = this.getInputMap(WHEN_IN_FOCUSED_WINDOW);
-	arrows.put(KeyStroke.getKeyStroke("RIGHT"),"Right");
-	arrows.put(KeyStroke.getKeyStroke("LEFT"), "Left");
-	arrows.put(KeyStroke.getKeyStroke("UP"), "Up");
-	arrows.put(KeyStroke.getKeyStroke("DOWN"), "Down");
-	arrows.put(KeyStroke.getKeyStroke("SPACE"), "Space");
+	InputMap keys = getInputMap(WHEN_IN_FOCUSED_WINDOW);
+	keys.put(KeyStroke.getKeyStroke("RIGHT"),"Right");
+	keys.put(KeyStroke.getKeyStroke("LEFT"), "Left");
+	keys.put(KeyStroke.getKeyStroke("UP"), "Up");
+	keys.put(KeyStroke.getKeyStroke("DOWN"), "Down");
+	keys.put(KeyStroke.getKeyStroke("SPACE"), "Space");
 
 
-	ActionMap act = this.getActionMap();
+	ActionMap act = getActionMap();
 	act.put("Right", new RightAction());
 	act.put("Left", new LeftAction());
 	act.put("Up", new UpAction());
@@ -44,6 +55,9 @@ public class TetrisComponent extends JComponent implements BoardListener {
 	act.put("Space", new SpaceAction());
     }
 
+    /**
+     * HardDrop the falling tetromino.
+     */
     private class SpaceAction extends AbstractAction{
     	@Override public void actionPerformed(final ActionEvent e) {
 	    while(board.getFalling() != null){
@@ -65,6 +79,7 @@ public class TetrisComponent extends JComponent implements BoardListener {
     	}
     }
 
+
     private class DownAction extends AbstractAction{
     	@Override public void actionPerformed(final ActionEvent e) {
 	    if(board.getFalling() != null){
@@ -73,6 +88,7 @@ public class TetrisComponent extends JComponent implements BoardListener {
 
     	}
     }
+
 
     private class RightAction extends AbstractAction{
 	@Override public void actionPerformed(final ActionEvent e) {
@@ -88,7 +104,6 @@ public class TetrisComponent extends JComponent implements BoardListener {
 	    if(board.getFalling() != null){
 		board.moveFallingLeft();
 	    }
-
     	}
     }
 
@@ -107,12 +122,10 @@ public class TetrisComponent extends JComponent implements BoardListener {
 		int cornerX = x * BLOCK_SIZE + border;
 		int cornerY = y * BLOCK_SIZE + border;
 
-		g2d.fillRect(cornerX, cornerY,
-			     BLOCK_SIZE - border,
-			     BLOCK_SIZE - border);
+		g2d.fillRect(cornerX, cornerY, BLOCK_SIZE - border, BLOCK_SIZE - border);
 
 
-		g2d.setColor(Color.BLACK);
+		g2d.setColor(LINE_COLOR);
 		g2d.drawLine(x*BLOCK_SIZE,y*BLOCK_SIZE, x*BLOCK_SIZE, (y+1)*BLOCK_SIZE);
 		g2d.drawLine(x*BLOCK_SIZE,y*BLOCK_SIZE, (x+1)*BLOCK_SIZE, y*BLOCK_SIZE);
 
@@ -128,9 +141,19 @@ public class TetrisComponent extends JComponent implements BoardListener {
 	g2d.drawString(board.getCollisionHandler().getDescription(), board.getWidth() * BLOCK_SIZE - 110, FONT_SIZE + 10);
     }
 
-
-
+    /**
+     *
+     * @param x
+     * @param y
+     * @return boolean
+     */
     private boolean zoneOfFalling(int x, int y){
+	/**
+	 * Return if the board has a falling and checks
+	 * if the the current x and y is within the block and is not and empty block.
+	 * Thus returns true if the game should paint from the falling poly  and false if the board
+	 * sgould be used instead.
+	 */
 	return ((board.getFalling() != null) &&
 		((board.getFallingX() <= x && (board.getFallingX() + board.getFalling().getBlock().length) > x) &&
 		(board.getFallingY() <= y && board.getFallingY() + board.getFalling().getBlock()[0].length > y) &&

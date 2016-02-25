@@ -11,6 +11,10 @@ public class Board {
     private static final int SCORE_OF_3_ROWS = 500;
     private static final int SCORE_OF_4_ROWS = 800;
     private static final int PADDING = 2;
+    /**
+     * 2/CHACNE_OF_POWERUP is the chance to get a powerup.
+     */
+    public static final int CHANCE_OF_POWERUP = 20;
 
     private SquareType[][] squares;
     private int width, height;
@@ -43,6 +47,9 @@ public class Board {
 	primeBoard();
     }
 
+    /**
+     * Makes the board empty with a border.
+     */
     public void primeBoard(){
 	for(int y = 0; y < this.height + 2*PADDING; y++){
 	    for(int x = 0; x < this.width + 2*PADDING; x++) {
@@ -57,10 +64,16 @@ public class Board {
 	}
     }
 
+
     public void tick(){
 
+	/**
+	 * If no falling exist, creates a new one.
+	 * Randomizes if the block should have a powerup, with the specefied chance
+	 * for that falling.
+	 */
 	if(falling == null){
-	    switch(random.nextInt(20)){
+	    switch(random.nextInt(CHANCE_OF_POWERUP)){
 		case(1):
 		    collisionHandler = new Heavy();
 		    break;
@@ -84,6 +97,14 @@ public class Board {
 	}else{
 	    fall();
 	}
+
+	addScore();
+
+	notifyListeners();
+    }
+
+
+    private void addScore(){
 	int removedRows = 0;
 	while(hasFullRow() != -1){
 	    removeRow(hasFullRow());
@@ -103,10 +124,14 @@ public class Board {
 	    	score += SCORE_OF_4_ROWS;
 		break;
 	}
-
-	notifyListeners();
     }
 
+    /**
+     * Checks the row under the specified height if it has an empty block
+     * @param row
+     * @param fromHeight
+     * @return boolean
+     */
     public boolean canCollapsRow(int row, int fromHeight){
 	for(int y = fromHeight; y < height; y++){
 	    if(getSquare(row, y) == SquareType.EMPTY){
@@ -115,6 +140,7 @@ public class Board {
 	}
 	return false;
     }
+
 
     public void collapsRow(int fromHeight, int row){
 	int heighestEmpty = 0;
@@ -132,9 +158,11 @@ public class Board {
 
     }
 
+
     public void removeSquare(int x, int y){
 	squares[x + PADDING][y + PADDING] = SquareType.EMPTY;
     }
+
 
     public void removeRow(int row){
 
@@ -147,6 +175,7 @@ public class Board {
 	}
 	notifyListeners();
     }
+
 
     public int hasFullRow(){
 	int c = 0;
@@ -165,6 +194,7 @@ public class Board {
 	return -1;
     }
 
+
     public void fall(){
 	fallingY++;
 	if(collisionHandler.hasCollision(this)){
@@ -173,6 +203,7 @@ public class Board {
 	}
 	notifyListeners();
     }
+
 
     public void addFallingToBoard(){
 	for(int y = 0; y < falling.getBlock()[0].length; y++){
@@ -197,6 +228,7 @@ public class Board {
 	notifyListeners();
     }
 
+
     public void moveFallingLeft(){
 	fallingX--;
 
@@ -206,6 +238,7 @@ public class Board {
 
 	notifyListeners();
     }
+
 
     public void rotate(){
 	Poly tempPoly = falling;
@@ -218,31 +251,38 @@ public class Board {
 	notifyListeners();
     }
 
+
     public Poly getFalling() {
 	return falling;
     }
+
 
     public int getFallingX() {
 	return fallingX;
     }
 
+
     public int getFallingY() {
 	return fallingY;
     }
+
 
     public int getHeight() {
 	return height;
     }
 
+
     public int getWidth() {
 	return width;
     }
+
 
     public void addBoardListener(BoardListener bl){
 	boardListeners.add(bl);
     }
 
-	public void resetBoard(){
+
+    public void resetBoard(){
 		primeBoard();
 	    	falling = null;
 	    	fallingX = 0;
@@ -251,27 +291,33 @@ public class Board {
 		gameOver = false;
 	}
 
+
     public void notifyListeners(){
 	for(BoardListener bl : boardListeners){
 	    bl.boardChanged();
 	}
     }
 
+
     public SquareType getSquare(int x, int y){
 	return squares[x + PADDING][y + PADDING];
     }
+
 
     public void setSquare(int x, int y, SquareType st) {
 	squares[x + PADDING][y + PADDING] = st;
     }
 
+
     public boolean isGameOver() {
 	return gameOver;
     }
 
+
     public int getScore() {
 	return score;
     }
+
 
     public CollisionHandler getCollisionHandler() {
 	return collisionHandler;

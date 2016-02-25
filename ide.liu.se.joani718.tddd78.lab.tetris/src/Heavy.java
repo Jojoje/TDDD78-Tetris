@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ */
 public class Heavy implements CollisionHandler{
     @Override public boolean hasCollision(final Board board) {
 	boolean stuckCollision = false;

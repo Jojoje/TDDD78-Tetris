@@ -6,8 +6,8 @@ public final class HighscoreList {
 
     private static final HighscoreList INSTANCE = new HighscoreList();
     private List<Highscore> highscore;
-    /*
-    *Since i know that the only Comparator i will use is the ScoreComparator and i do
+    /**
+     *Since i know that the only Comparator i will use is the ScoreComparator.
      */
     private ScoreComparator scoreComparator = new ScoreComparator();
 
@@ -28,7 +28,6 @@ public final class HighscoreList {
     }
 
     public void sort(){
-	//TODO Learn about this
 	Collections.sort(highscore, scoreComparator);
     }
 }

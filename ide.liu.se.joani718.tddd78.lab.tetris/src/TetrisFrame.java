@@ -4,12 +4,16 @@ import java.awt.event.*;
 
 /**
  * JFrame obeject that contains:
- * menubar,
+ *  a menubar and
  * a tetrisComponent or a HighscoreComponent
  */
 public class TetrisFrame extends JFrame{
     private Board board;
     private TetrisComponent tetrisComponent;
+
+    /**
+     * I dont want to instaciate highscoreComponent before it's actually used if used at all.
+     */
     private HighscoreComponent highscoreComponent;
 
     public TetrisFrame(Board board) {
@@ -34,6 +38,7 @@ public class TetrisFrame extends JFrame{
 	final JMenu options = new JMenu("Options");
 	final JMenuItem reset = new JMenuItem("Reset");
 	final JMenuItem quit = new JMenuItem("Exit");
+
 	reset.addActionListener(new ResetListener());
 	quit.addActionListener(new ExitListener());
 	options.add(reset);
@@ -72,6 +77,10 @@ public class TetrisFrame extends JFrame{
 	}
     }
 
+    /**
+     * Removes the TetrisComponent and replaceses it with a HighscoreComponent
+     * @param highscore
+     */
     public void showHighscore(HighscoreList highscore){
 	highscoreComponent = new HighscoreComponent(highscore, board.getWidth(),board.getHeight());
 	this.remove(tetrisComponent);
@@ -80,15 +89,17 @@ public class TetrisFrame extends JFrame{
 
     }
 
+
     public void resetGame(){
+
 	if(highscoreComponent != null){
 	    this.remove(highscoreComponent);
-	    	board.resetBoard();
-	    	tetrisComponent = new TetrisComponent(board);
-	    	board.addBoardListener(tetrisComponent);
-	    	this.add(tetrisComponent);
-	    	this.pack();
-	    	BoardTest.clockTimer.start();
+	    board.resetBoard();
+	    tetrisComponent = new TetrisComponent(board);
+	    board.addBoardListener(tetrisComponent);
+	    this.add(tetrisComponent);
+	    this.pack();
+	    BoardTest.clockTimer.start();
 	}else{
 	    board.resetBoard();
 	}

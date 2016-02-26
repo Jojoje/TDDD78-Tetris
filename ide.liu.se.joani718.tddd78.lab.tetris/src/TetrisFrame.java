@@ -79,7 +79,7 @@ public class TetrisFrame extends JFrame{
 
     /**
      * Removes the TetrisComponent and replaceses it with a HighscoreComponent
-     * @param highscore
+     * @param highscore Highscore
      */
     public void showHighscore(HighscoreList highscore){
 	highscoreComponent = new HighscoreComponent(highscore, board.getWidth(),board.getHeight());

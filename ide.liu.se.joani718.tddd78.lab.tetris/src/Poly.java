@@ -1,3 +1,6 @@
+/**
+ * Holds a 2D array of SquareTypes and represent a polyomino
+ */
 public class Poly {
     private SquareType[][] block;
 
@@ -6,7 +9,7 @@ public class Poly {
 
     }
 
-    public int getBlockSize(){
+    public int getSize(){
         return block.length;
     }
 

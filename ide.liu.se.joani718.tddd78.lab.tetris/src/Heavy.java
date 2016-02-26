@@ -10,8 +10,8 @@ public class Heavy implements CollisionHandler{
 	List<Integer> rowsToCollaps = new ArrayList<>();
 	List<Integer> fromHeight = new ArrayList<>();
 
-	for (int y = 0; y < board.getFalling().getBlockSize(); y++){
-	    for(int x = 0; x < board.getFalling().getBlockSize(); x++){
+	for (int y = 0; y < board.getFalling().getSize(); y++){
+	    for(int x = 0; x < board.getFalling().getSize(); x++){
 		if (board.getSquare(board.getFallingX() + x, board.getFallingY() + y) != SquareType.EMPTY &&
 		    board.getFalling().getSquareAt(x, y) != SquareType.EMPTY){
 		    if(board.canCollapsRow(board.getFallingX() + x, board.getFallingY() + y + 1)){ //&& !board.isEmptyRow(x)){

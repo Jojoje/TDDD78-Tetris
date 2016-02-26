@@ -1,3 +1,6 @@
+/**
+ * A Factory type class to create Polys of the diffrent types of a Tetris Game.
+ */
 public class TetrominoMaker {
 
     public int getNumberOfTypes() {

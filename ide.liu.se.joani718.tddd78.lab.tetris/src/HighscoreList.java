@@ -2,6 +2,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * A Singelton to hold a list of Highscore
+ */
 public final class HighscoreList {
 
     private static final HighscoreList INSTANCE = new HighscoreList();

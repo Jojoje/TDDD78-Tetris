@@ -6,20 +6,20 @@ public class Fallthrough implements CollisionHandler{
     /**
      * Checks if falling is colliding but only with outside blocks.
      * Then checks if it's colliding with anything on the board, if so removes that block.
-     * @param board
+     * @param board Board
      * @return boolean
      */
     public boolean hasCollision(Board board){
-    	for (int y = 0; y < board.getFalling().getBlockSize(); y++){
-    	    for(int x = 0; x < board.getFalling().getBlockSize(); x++){
+    	for (int y = 0; y < board.getFalling().getSize(); y++){
+    	    for(int x = 0; x < board.getFalling().getSize(); x++){
     		if (board.getSquare(board.getFallingX() + x, board.getFallingY() + y) == SquareType.OUTSIDE &&
     		    board.getFalling().getSquareAt(x, y) != SquareType.EMPTY){
     		    return true;
     		}
     	    }
     	}
-	for (int y = 0; y < board.getFalling().getBlockSize(); y++){
-	    for(int x = 0; x < board.getFalling().getBlockSize(); x++){
+	for (int y = 0; y < board.getFalling().getSize(); y++){
+	    for(int x = 0; x < board.getFalling().getSize(); x++){
 	    	if(board.getSquare(board.getFallingX() + x, board.getFallingY() + y) != SquareType.EMPTY &&
 			 board.getFalling().getSquareAt(x, y) != SquareType.EMPTY){
 		    board.removeSquare(board.getFallingX() + x,board.getFallingY() + y);

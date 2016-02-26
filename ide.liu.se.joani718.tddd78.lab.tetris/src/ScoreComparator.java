@@ -1,5 +1,7 @@
 import java.util.Comparator;
-
+/**
+ * A Comperator to compare two Highscores
+ */
 public class ScoreComparator implements Comparator<Highscore>
 {
     /** Compares its two arguments for order.

@@ -106,8 +106,8 @@ public class Board {
 
     private void addScore(){
 	int removedRows = 0;
-	while(hasFullRow() != -1){
-	    removeRow(hasFullRow());
+	while(findFullRow() != -1){
+	    removeRow(findFullRow());
 	    removedRows++;
 	}
 	switch(removedRows){
@@ -128,8 +128,8 @@ public class Board {
 
     /**
      * Checks the row under the specified height if it has an empty block
-     * @param row
-     * @param fromHeight
+     * @param row int
+     * @param fromHeight int
      * @return boolean
      */
     public boolean canCollapsRow(int row, int fromHeight){
@@ -142,7 +142,7 @@ public class Board {
     }
 
 
-    public void collapsRow(int fromHeight, int row){
+    private void collapsRow(int fromHeight, int row){
 	int heighestEmpty = 0;
 	for(int y = fromHeight; y < height; y++){
 	    if(getSquare(row, y) == SquareType.EMPTY){
@@ -159,7 +159,7 @@ public class Board {
     }
 
 
-    public void removeSquare(int x, int y){
+    private void removeSquare(int x, int y){
 	squares[x + PADDING][y + PADDING] = SquareType.EMPTY;
     }
 
@@ -176,8 +176,11 @@ public class Board {
 	notifyListeners();
     }
 
-
-    public int hasFullRow(){
+    /**
+     * checks if a row is full, and return the index of the full row.
+     * returns -1 if there is no full row
+     */
+    public int findFullRow(){
 	int c = 0;
 	for(int y = 0; y < height; y++){
 	    for(int x = 0;x < width; x++){
@@ -239,7 +242,9 @@ public class Board {
 	notifyListeners();
     }
 
-
+    /**
+     * Rotates a Poly to the right.
+     */
     public void rotate(){
 	Poly tempPoly = falling;
 	falling = falling.rotateRight();

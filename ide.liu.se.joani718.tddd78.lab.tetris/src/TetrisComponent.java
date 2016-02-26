@@ -142,9 +142,10 @@ public class TetrisComponent extends JComponent implements BoardListener {
     }
 
     /**
-     *
-     * @param x
-     * @param y
+     * Returns whether or not a falling Poly square that is not EMPTY
+     * occopies a square on the board specifed by x,y.
+     * @param x int
+     * @param y int
      * @return boolean
      */
     private boolean zoneOfFalling(int x, int y){
